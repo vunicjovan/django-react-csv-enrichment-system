@@ -1,0 +1,23 @@
+FROM python:3.9-slim
+
+RUN adduser --disabled-password --gecos '' user
+COPY ./requirements*.txt /home/user/
+RUN apt-get update && apt-get install -y postgresql openssl gcc libpq-dev dos2unix
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r /home/user/requirements-development.txt
+
+WORKDIR /home/user/backend
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=True
+
+# Reference the entrypoint script and set proper permissions
+COPY ./entrypoint.sh /home/user/
+RUN dos2unix /home/user/entrypoint.sh && \
+    chmod +x /home/user/entrypoint.sh && \
+    chown user:user /home/user/entrypoint.sh
+# RUN chmod +x /home/user/entrypoint.sh && chown user:user /home/user/entrypoint.sh
+
+# Switch to non-root user after the permissions for entrypoint script are set
+EXPOSE 8000
+USER user
+ENTRYPOINT ["/home/user/entrypoint.sh"]

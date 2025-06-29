@@ -1,0 +1,101 @@
+services:
+  # Database service
+  database:
+    container_name: transformer-database
+    image: postgres:9.6-alpine
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_DB: transformer
+    ports:
+      - "5433:5432"
+    restart: unless-stopped
+    # Healthcheck configuration
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  # Async tasks broker service
+  redis:
+    container_name: transformer-redis
+    image: redis:6
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  # Async tasks worker
+  celery:
+    container_name: transformer-celery
+    build:
+      context: ${PWD}/backend/
+      dockerfile: Dockerfile.development
+    image: transformer-backend
+    environment:
+      DJANGO_SETTINGS_MODULE: transformer.settings
+      BROKER_URL: redis://redis:6379
+      DATABASE_HOST: database
+      DATABASE_NAME: transformer
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    entrypoint: [ ]  # Prevent duplicate log messages based on entrypoint script
+    command: celery -A transformer worker --autoscale=4,1 --loglevel=info
+    volumes:
+      - ${PWD}/backend/:/home/user/backend/:delegated
+    depends_on:
+      database:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # Main backend application
+  backend:
+    container_name: transformer-backend
+    build:
+      context: ${PWD}/backend/
+      dockerfile: Dockerfile.development
+    image: transformer-backend
+    ports:
+      - "8000:8000"
+    environment:
+      BROKER_URL: redis://redis:6379
+      DATABASE_HOST: database
+      DATABASE_NAME: transformer
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    volumes:
+      - ${PWD}/backend/:/home/user/backend/:delegated
+      - ${PWD}/frontend/:/home/user/frontend/:delegated
+    depends_on:
+      database:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: on-failure
+
+  frontend:
+    container_name: transformer-frontend
+    build:
+      context: ${PWD}/frontend/
+      dockerfile: Dockerfile.development
+    ports:
+      - "5173:5173"
+    volumes:
+      - ${PWD}/frontend/:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    environment:
+      - VITE_API_URL=http://localhost:8000/api
+
+volumes:
+  redis_data:

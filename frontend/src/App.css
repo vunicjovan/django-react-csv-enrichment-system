@@ -1,0 +1,139 @@
+/* Reset defaults and set up base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+#root {
+    width: 100%;
+    height: 100%;
+}
+
+/* Main container and layout */
+.container {
+    width: 100%;
+    min-height: calc(100vh - 64px);
+    display: flex;
+    justify-content: center;
+    padding: 2rem 1rem;
+    background-color: #f5f7fa;
+    margin-top: 64px;
+}
+
+.content {
+    width: 100%;
+    max-width: 70%;  /* Increased to accommodate side-by-side layout */
+    margin: 0 auto;
+    display: flex;  /* Enable flexbox for side-by-side layout */
+    gap: 2rem;      /* Add space between components */
+}
+
+/* Main content area (file upload/list) */
+.main-content {
+    flex: 1;        /* Take remaining space */
+}
+
+/* Health check popup container */
+.health-check-container {
+    width: 350px;   /* Fixed width for the health check section */
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .content {
+        flex-direction: column; /* Stack vertically on smaller screens */
+        max-width: 75%;
+    }
+
+    .health-check-container {
+        width: 100%;
+    }
+}
+
+.title {
+    color: #333;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+/* Card component */
+.card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    width: 100%;
+}
+
+/* Error state */
+.error {
+    color: #ef4444;
+    padding: 16px;
+    background: #fee2e2;
+    border-radius: 4px;
+    margin: 16px 0;
+}
+
+/* Animation for loading states */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .container {
+        background-color: #1a1a1a;
+    }
+
+    .card {
+        background-color: #252525;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .title {
+        color: #fff;
+    }
+
+    .error {
+        background-color: #451a1a;
+        color: #fca5a5;
+    }
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+    .container {
+        padding: 1rem 0.5rem;
+    }
+
+    .title {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .card {
+        padding: 1rem;
+        border-radius: 6px;
+    }
+}

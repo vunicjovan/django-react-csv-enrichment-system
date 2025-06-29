@@ -1,0 +1,180 @@
+.health-panel {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 16px;
+  width: 100%;
+  height: fit-content;
+}
+
+.health-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.health-panel-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.refresh-button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid #3b82f6;
+  color: #3b82f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.refresh-button:hover:not(:disabled) {
+  background: #3b82f6;
+  color: white;
+  transform: scale(1.05);
+}
+
+.refresh-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.refresh-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+.health-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.health-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  background: #f3f4f6;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.health-item:hover {
+  background: #e5e7eb;
+}
+
+.health-icon {
+  width: 20px;
+  height: 20px;
+  color: #6b7280;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.health-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.health-info strong {
+  font-size: 0.875rem;
+  color: #111827;
+}
+
+.health-info span {
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.health-loading {
+  text-align: center;
+  padding: 8px;
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.health-error {
+  color: #ef4444;
+  padding: 8px;
+  font-size: 0.875rem;
+  background: #fee2e2;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
+@media (prefers-color-scheme: dark) {
+  .health-panel {
+    background: #1a1a1a;
+    border: 1px solid #333;
+  }
+
+  .health-panel-header h3 {
+    color: #e5e7eb;
+  }
+
+  .health-item {
+    background: #374151;
+  }
+
+  .health-item:hover {
+    background: #4b5563;
+  }
+
+  .health-info strong {
+    color: #e5e7eb;
+  }
+
+  .health-info span {
+    color: #9ca3af;
+  }
+
+  .health-icon {
+    color: #9ca3af;
+  }
+
+  .health-loading {
+    color: #9ca3af;
+  }
+
+  .health-error {
+    background: #451a1a;
+    color: #f87171;
+  }
+
+  .refresh-button {
+    border-color: #3b82f6;
+    color: #3b82f6;
+    background: transparent;
+  }
+
+  .refresh-button:hover:not(:disabled) {
+    background: #3b82f6;
+    color: white;
+  }
+}
+
+@media (max-width: 1024px) {
+  .health-panel {
+    margin-top: 16px;
+  }
+}

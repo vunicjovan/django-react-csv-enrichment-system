@@ -1,0 +1,19 @@
+.DS_Store
+
+# IDE
+/.idea/
+/.vscode/
+
+# backend
+/backend/.venv/
+/backend/**/__pycache__/
+/backend/db.sqlite3
+
+# frontend
+/frontend/node_modules/
+
+# media directory
+/backend/media/
+
+# logs directory
+/backend/logs/

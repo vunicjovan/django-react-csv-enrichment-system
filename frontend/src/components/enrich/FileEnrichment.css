@@ -1,0 +1,81 @@
+.enrich-modal {
+    background: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    padding: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.modal-footer button {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.modal-footer button[type="submit"] {
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+}
+
+.modal-footer button[type="button"] {
+    background-color: #e5e7eb;
+    border: 1px solid #d1d5db;
+}
+
+@media (prefers-color-scheme: dark) {
+    .enrich-modal {
+        background-color: #1a1a1a;
+    }
+
+    .form-group label {
+        color: #e5e7eb;
+    }
+
+    .form-group input,
+    .form-group select {
+        background-color: #2a2a2a;
+        border-color: #4b5563;
+        color: #e5e7eb;
+    }
+
+    .modal-footer button[type="button"] {
+        background-color: #374151;
+        border-color: #4b5563;
+        color: #e5e7eb;
+    }
+}
+
+.form-group input[type="text"]:invalid {
+    border-color: #ef4444;
+}
+
+.form-group input[type="text"]:invalid:focus {
+    outline-color: #ef4444;
+}
