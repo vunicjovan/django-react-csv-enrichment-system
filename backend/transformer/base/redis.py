@@ -4,7 +4,10 @@ from redis import Redis
 
 class FileStatusManager:
     """
-    TODO
+    Manages the processing status of files using Redis.
+
+    Provides methods to get and set the processing status of files based on their IDs.
+    It uses Redis to store the status, progress, and last updated timestamp of each file.
     """
 
     client: Redis = Redis(
